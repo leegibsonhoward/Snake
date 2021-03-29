@@ -149,18 +149,13 @@ END_OF_MAIN()
 
 void debug(void)
 {
-    if(debug_on)
-    {
-
-        textprintf_ex(console, font, (SCREEN_W / 2) - 40, 5, WHITE, -1,
-                "Snake v0.1");
-        textprintf_ex(console, font, 10, 7, WHITE, -1,
-        "COUNTER %d", counter);
-        textprintf_ex(console, font, 10, 17, WHITE, -1,
-        "FRAMERATE %d", framerate);
-        textprintf_ex(console, font, 10, 27, WHITE, -1,
-        "RESTING %d", rested);
-        blit(console, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H / 12);
-
-    }
+    textprintf_ex(console, font, (SCREEN_W / 2) - 40, 5, WHITE, -1,
+            "Snake v0.1");
+    textprintf_ex(console, font, 10, 7, WHITE, -1,
+    "COUNTER %d", counter);
+    textprintf_ex(console, font, 10, 17, WHITE, -1,
+    "FRAMERATE %d", framerate);
+    textprintf_ex(console, font, 10, 27, WHITE, -1,
+    "RESTING %d", rested);
+    blit(console, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H / 12);
 }
