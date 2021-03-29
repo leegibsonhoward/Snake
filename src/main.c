@@ -59,7 +59,7 @@ int main(void)
     install_keyboard();
     install_timer();
 
-    // create double buffer
+    // create buffers
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
     console = create_bitmap(SCREEN_W, SCREEN_H / 12);
 
@@ -100,6 +100,10 @@ int main(void)
         // clear bitmap
         clear_bitmap(buffer);
 
+        // update game 
+        //
+        //
+
         // main check for input
         if (key_down)
         {
@@ -115,13 +119,13 @@ int main(void)
                 flip_debug_switch();
         }
 
-        // nothing done on key_up, do nothing?
+        // nothing to do on key_up, do nothing?
         if (key_up)
         {
             key_up = 0;
         }
         
-        // debug_on flag true, then debug
+        // run if in debug mode
         if(is_debug_on())
         {
             clear_to_color(console, DEBUG_BLUE);
