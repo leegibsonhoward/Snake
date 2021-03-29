@@ -14,7 +14,7 @@
 BITMAP *buffer;
 BITMAP *console;
 bool is_running = false;
-int debug(void);
+void debug(void);
 bool debug_on = false;
 
 // timer variables
@@ -147,7 +147,7 @@ int main(void)
 }
 END_OF_MAIN()
 
-int debug(void)
+void debug(void)
 {
     if(debug_on)
     {
@@ -163,6 +163,4 @@ int debug(void)
         blit(console, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H / 12);
 
     }
-
-    return -1;
 }
