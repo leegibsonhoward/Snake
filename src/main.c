@@ -140,7 +140,7 @@ int main(void)
 
     // remove objects from memory
     destroy_bitmap(buffer);
-
+    destroy_bitmap(console);
     allegro_exit();
 
     return 0;
