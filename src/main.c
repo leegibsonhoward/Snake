@@ -8,11 +8,13 @@
 #define HEIGHT 480
 #define BLACK makecol(0, 0, 0)
 #define WHITE makecol(255, 255, 255)
+#define DEBUG_BLUE makecol(0, 0, 200)
 
 // variables and functions
 BITMAP *buffer;
+BITMAP *console;
 bool is_running = false;
-void debug(void);
+int debug(void);
 bool debug_on = false;
 
 // timer variables
@@ -59,6 +61,7 @@ int main(void)
 
     // create double buffer
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    console = create_bitmap(SCREEN_W, SCREEN_H / 12);
 
     // lock interrupt variables
     LOCK_VARIABLE(counter);
@@ -102,16 +105,17 @@ int main(void)
         {
             key_down = 0;
 
-            // short circuit game loop
+            // SHORT CIRCUIT game loop
             if(key[KEY_Q])
                 // (TODO): create exit confirm, then goto main menu
                 is_running = false;
 
-            // toggle debug menu
+            // toggle DEBUG_CONSOLE menu
             if(key[KEY_D])
                 flip_debug_switch();
         }
-        // nothing done on key_up
+
+        // nothing done on key_up, do nothing?
         if (key_up)
         {
             key_up = 0;
@@ -119,7 +123,10 @@ int main(void)
         
         // debug_on flag true, then debug
         if(is_debug_on())
+        {
+            clear_to_color(console, DEBUG_BLUE);
             debug();
+        }
 
         // update the screen
         acquire_screen();
@@ -136,19 +143,22 @@ int main(void)
 }
 END_OF_MAIN()
 
-void debug(void)
+int debug(void)
 {
     if(debug_on)
     {
-        textprintf_ex(buffer, font, (SCREEN_W / 2) - 40, 10, WHITE, -1,
+
+        textprintf_ex(console, font, (SCREEN_W / 2) - 40, 10, WHITE, -1,
                 "Snake v0.1");
-        textprintf_ex(buffer, font, 10, 10, WHITE, -1,
+        textprintf_ex(console, font, 10, 5, WHITE, -1,
         "COUNTER %d", counter);
-        textprintf_ex(buffer, font, 10, 20, WHITE, -1,
+        textprintf_ex(console, font, 10, 15, WHITE, -1,
         "FRAMERATE %d", framerate);
-        textprintf_ex(buffer, font, 10, 30, WHITE, -1,
+        textprintf_ex(console, font, 10, 25, WHITE, -1,
         "RESTING %d", rested);
+        blit(console, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H / 12);
+
     }
 
-    // short circuit if debug = false
+    return -1;
 }
