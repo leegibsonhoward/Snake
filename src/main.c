@@ -194,5 +194,7 @@ void debug(void)
     "FRAMERATE %d", framerate);
     textprintf_ex(console, font, 10, 27, WHITE, -1,
     "RESTING %d", rested);
+    textprintf_ex(console, font, (SCREEN_W / 2) - 40, 20, WHITE, -1,
+            "x = %d, y = %d", snake_x, snake_y);
     blit(console, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H / 12);
 }
