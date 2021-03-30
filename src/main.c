@@ -16,6 +16,9 @@ BITMAP *console;
 bool is_running = false;
 void debug(void);
 bool debug_on = false;
+int snake_x, snake_y;
+
+enum SNAKE_DIRECTION { UP, DOWN, LEFT, RIGHT };
 
 // timer variables
 volatile int counter;
@@ -83,6 +86,13 @@ int main(void)
     // disable keyboard repeat
     set_keyboard_rate(0, 0);
     
+    // set initial start direction
+    enum SNAKE_DIRECTION direction = RIGHT;
+
+    // set initial start position
+    snake_x = (SCREEN_W - 40) / 2;
+    snake_y = (SCREEN_H - 40) / 2;
+
     // start game
     is_running = true;
 
@@ -117,6 +127,20 @@ int main(void)
             // toggle DEBUG_CONSOLE menu
             if(key[KEY_D])
                 flip_debug_switch();
+
+            // check snake input
+            if(key[KEY_UP])
+                if(direction != DOWN)
+                    direction = UP;
+            if (key[KEY_DOWN])  
+                if(direction != UP)
+                    direction = DOWN;
+            if (key[KEY_LEFT])
+                if(direction != RIGHT)
+                    direction = LEFT;
+            if (key[KEY_RIGHT])
+                if(direction != LEFT)
+                    direction = RIGHT;
         }
 
         // nothing to do on key_up, do nothing?
@@ -124,7 +148,20 @@ int main(void)
         {
             key_up = 0;
         }
+
+        // calculate snake traveling direction
+        if(direction == UP)
+            snake_y -= 2;
+        if (direction == DOWN)
+            snake_y += 2;
+        if(direction == LEFT)
+            snake_x -= 2;
+        if(direction == RIGHT)
+            snake_x += 2;
         
+        // draw snake
+        rectfill(buffer, snake_x, snake_y, snake_x + 10, snake_y + 10, WHITE);
+
         // run if in debug mode
         if(is_debug_on())
         {
